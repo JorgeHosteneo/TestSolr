@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Busqueda en una Base de Datos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!—[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]—>
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body { padding-top: 60px; }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+	<script  type="text/javascript">
+	$(document).ready(function(){
+	  $("button").click(function(){
+		  var url = "http://localhost:8080/ejemplo/EjemploServlet?busqueda=" + $("#busqueda").val();
+		  alert("http://localhost:8080/ejemplo/EjemploServlet?busqueda=" + $("#busqueda").val());   
+		 //var url = "http://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?"
+		  $.getJSON( url, function( data ) {
+			  alert("antes");
+		  });  
+	  });
+	});
+	</script>
+
+</head>
+<body>
+<div class="span6">
+	 <label>Busqueda:</label>
+	 <input class="span12" id="busqueda" type="text" name="busqueda" placeholder="Que desea buscar...">
+</div>
+
+<div class="btn-group span4">
+<button class="btn btn-primary">Buscar</button>	
+</div>
+
+</body>
+</html>
