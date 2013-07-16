@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.noggit.JSONUtil;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -21,7 +22,7 @@ import org.apache.solr.common.SolrDocumentList;
 @WebServlet("/EjemploServlet")
 public class EjemploServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String CONTENT_TYPE = null;
+	//private static final String CONTENT_TYPE = null;
     /**
      * @see HttpServlet#HttpServlet()
      */	
@@ -52,7 +53,10 @@ public class EjemploServlet extends HttpServlet {
 			rsp = server.query( query );
 			SolrDocumentList doc = rsp.getResults();
 			PrintWriter out = response.getWriter();
-			out.println(doc.toString());
+			response.setContentType("application/json;charset=UTF-8");
+			out.print(JSONUtil.toJSON(doc));
+			out.flush();
+			out.close();
 			
 	    }
 	    catch (SolrServerException e) {

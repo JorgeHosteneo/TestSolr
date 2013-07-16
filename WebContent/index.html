@@ -10,34 +10,118 @@
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
     <style>
       body { padding-top: 60px; }
-    </style>
+  	</style>
     <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-    
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js'></script>
 	<script  type="text/javascript">
+ 		var MostrarDatos = function(result){
+			var miTabla = $("<table />");
+		    miTabla.attr("id", "tablaResultado");
+		    miTabla.attr("class", "responsive");
+		    $("<thead />");
+		    $("<tr />");
+ 		    $("<th />").val("ID");
+ 		    $("<th />").val("NOMBRE");
+ 		    $("<th />").val("TIPO");
+			for (var i = 0; i < result.length; i++){
+				$("<tbody />");
+				$("<tr />");
+				$("<td />").val(result[i].id);
+				$("<td />").val(result[i].nombre);
+				$("<td />").val(result[i].tipo);
+			}
+ 			miTabla.appendTo(".resultado");
+ 			alert("dentro");
+ 		}  
 	$(document).ready(function(){
-	  $("button").click(function(){
-		  var url = "http://localhost:8080/ejemplo/EjemploServlet?busqueda=" + $("#busqueda").val();
-		  alert("http://localhost:8080/ejemplo/EjemploServlet?busqueda=" + $("#busqueda").val());   
-		 //var url = "http://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?"
-		  $.getJSON( url, function( data ) {
-			  alert("antes");
-		  });  
-	  });
+		$("#open").click(function(){
+			$("#resultado").empty();
+			$("#addModal").modal("show")
+		});				
+		$("#buscar").click(function(){
+			var url = "http://localhost:8080/ejemplo/EjemploServlet?busqueda=" + $("#busqueda").val();
+			$.getJSON(url, MostrarDatos)
+		});
+		$("#addModal").keypress(function(e) {
+			var url = "http://localhost:8080/ejemplo/EjemploServlet?busqueda=" + $("#busqueda").val();
+			if(e.which == 13) {
+		    	$.getJSON(url, MostrarDatos)
+				$("#addModal").modal("hide")
+		    }
+		});
 	});
 	</script>
-
 </head>
 <body>
-<div class="span6">
-	 <label>Busqueda:</label>
-	 <input class="span12" id="busqueda" type="text" name="busqueda" placeholder="Que desea buscar...">
-</div>
-
-<div class="btn-group span4">
-<button class="btn btn-primary">Buscar</button>	
-</div>
-
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>	
+	<div class="navbar navbar-fixed-top">
+	  <div class="navbar-inner">
+	    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+     	</a>
+	    <a class="brand"><img src="bootstrap/img/Logo.png"/></a>
+	    <div class="nav-collapse">
+          <ul class="nav">
+          <br><br>
+          <li class="active"><a href="http://imotionfactory.com/">iMotion Factoty</a></li>
+       	  </ul>
+      	</div>
+	  </div>
+	</div>
+	<br><br><br><br>
+	<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span9">
+			<h2>Aplicación para buscar en una base de datos con la ayuda de Solr</h2>
+			<div class="btn-group span9" align="center">
+				<button type="button" class="btn btn-primary" id="open" data-toggle="modal">Buscar</button>
+   			</div>
+   			<br><br>
+   			<div id="resultado" class="resultado" align="center">
+	    	</div>     		    					    	
+		</div>	<!--/span9-->
+		<div class="span3">		
+  		<div class="well sidebar-nav sidebar-nav-fixed">
+	   		<h3>Pantallas de la app</h3>
+	   		<a class="brand">
+			<img src="bootstrap/img/pantalla.png"/>
+			<br><br>
+			<img src="bootstrap/img/pantalla3.png"/>
+			</a>
+	   		</div>	<!--/well -->
+ 		</div>	<!--/span3-->     	 
+    </div> <!-- row-fluid -->
+	</div> <!--  container-fluid -->
+		
+			<!-- MODAL -->
+ 	<div id="addModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+ 	  <div class="modal-header"> 
+ 	    <h3 id="myModalLabel">Buscar en la base de datos</h3> 
+ 	  </div> 
+ 	  <div class="modal-body"> 
+ 	      <fieldset> 
+ 	        <div class="row-fluid"> 
+ 	            <div class="span6"> 
+ 	              <label>Busqueda:</label> 
+ 	              <input class="span12" id="busqueda" type="text" name="busqueda" placeholder="Que desea buscar..."> 
+ 	            </div> 
+ 	        </div> 
+ 	       </fieldset>	 
+ 	   		<div class="modal-footer"> 
+ 	    		<a class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</a> 
+ 	    		<button type="button" id="buscar" class="btn btn-primary" data-dismiss="modal" aria-hiden="true">Buscar</button>    		
+  	  	    </div> 
+ 	  </div> 
+ 	</div> <!-- MODAL -->
+		
+	<div id="footer" class="span12" align="center">
+		<br>
+		<span>&copy; Todos los derechos reservados</span><br/><b>Sitio maquetado con Twitter Bootstrap</b>
+	</div>
+			
 </body>
 </html>
